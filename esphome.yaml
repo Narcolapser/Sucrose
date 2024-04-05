@@ -1,0 +1,84 @@
+substitutions:
+  name: sucrose_candy_dispenser
+  friendly_name: Sucrose
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  name_add_mac_suffix: false
+  project:
+    name: esphome.web
+    version: '1.0'
+
+esp8266:
+  # board: esp01_1m
+  board: nodemcuv2
+
+logger:
+
+# Allow provisioning Wi-Fi via serial
+improv_serial:
+
+# Enable Home Assistant API
+api:
+  encryption:
+
+ota:
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+# Configure the stepper motor
+stepper:
+  - platform: uln2003
+    id: dispenser_stepper
+    pin_a: D1
+    pin_b: D2
+    pin_c: D3
+    pin_d: D4
+    max_speed: 512 steps/s
+    sleep_when_done: True
+
+# Define a button trigger
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: D6
+      mode: INPUT_PULLUP
+      inverted: true
+    name: "Stepper Motor Button"
+    on_press:
+      then:
+        - light.turn_on: led
+        - delay: 1s
+        - light.turn_off: led
+
+
+light:
+  - platform: binary
+    name: "Test Light"
+    id: led
+    output: led_builtin
+
+output:
+  - platform: gpio
+    pin: GPIO16
+    id: led_builtin
+
+# Example button configuration
+button:
+  - platform: output
+    name: "test button"
+    id: test_button
+    output: led_builtin
+    duration: 
+      2000ms
+    on_press: 
+      then:    
+        - stepper.report_position:
+            id: dispenser_stepper
+            position: 0
+        - stepper.set_target:
+           id: dispenser_stepper
+           target: 2048

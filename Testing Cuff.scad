@@ -1,0 +1,37 @@
+// This project is to create a candy despenser, specifically skittles, that connects to home assistant.
+
+mason_jar_inner_diameter = 60;
+mason_jar_outer_diameter = 71;
+skittle_diameter = 13;
+skittle_height = 9;
+motor_shaft_diameter = 5;
+motor_shaft_height = 6.5;
+motor_shaft_key_width = 3;
+
+$fn = 256;
+
+cuff_height = 25;
+wall_thickness = 1;
+cuff_diameter = mason_jar_outer_diameter+wall_thickness*2;
+
+// First the cuff
+translate([0,0,-wall_thickness]) {
+    
+    difference() {
+        cylinder(cuff_height,d=cuff_diameter);
+        translate([0,0,-1])
+            cylinder(cuff_height+2,d=cuff_diameter-wall_thickness*2);
+        }
+    
+    // Cuff needs a base
+    intersection() {
+        cylinder(wall_thickness,d=cuff_diameter-1);
+        translate([0,-cuff_diameter,0])
+            cube([cuff_diameter*2,cuff_diameter*2,wall_thickness]);
+        }
+    
+    // the key for the shield
+    translate([-cuff_diameter/2+3,0,cuff_height/2-10+1])
+        rotate([0,-90,0])
+            cylinder(2,d=cuff_height/2,$fn=3);
+}
