@@ -15,6 +15,6 @@ cuff_height = 25;
 wall_thickness = 1;
 //cuff_diameter = mason_jar_outer_diameter+wall_thickness*2;
 
-//singulator(mason_jar_outer_diameter,skittle_diameter);
+singulator(mason_jar_outer_diameter,skittle_diameter);
 echo("Rendering shield");
-singulator_shield(mason_jar_outer_diameter,cuff_height,skittle_diameter,wall_thickness);
+//singulator_shield(mason_jar_outer_diameter,cuff_height,skittle_diameter,wall_thickness);

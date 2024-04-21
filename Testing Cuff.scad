@@ -1,5 +1,7 @@
 // This project is to create a candy despenser, specifically skittles, that connects to home assistant.
 
+include <threads.scad>
+
 mason_jar_inner_diameter = 60;
 mason_jar_outer_diameter = 71;
 skittle_diameter = 13;
@@ -7,6 +9,9 @@ skittle_height = 9;
 motor_shaft_diameter = 5;
 motor_shaft_height = 6.5;
 motor_shaft_key_width = 3;
+threading_height = 15;
+thread_size = 1.5;
+thread_pitch = 5.57;
 
 $fn = 256;
 
@@ -34,4 +39,16 @@ translate([0,0,-wall_thickness]) {
     translate([-cuff_diameter/2+3,0,cuff_height/2-10+1])
         rotate([0,-90,0])
             cylinder(2,d=cuff_height/2,$fn=3);
+}
+
+translate([0,0,cuff_height-(thread_pitch*3)]){
+    degrees = 360/$fn;
+    thread_step = thread_pitch/$fn;
+    for(i = [0:$fn*2]) {
+        rotate([0,0,degrees*i]) {
+            translate([mason_jar_outer_diameter/2-thread_size,-thread_size/2,thread_step*i]){
+                cube(thread_size);
+            }
+        }
+    }
 }
