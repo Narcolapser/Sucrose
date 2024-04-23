@@ -51,19 +51,13 @@ difference() {
     
     // The screw holes for mounting and the knotches for them.
     // Rework this. Instead of making each one, make it in a for loop and rotate them around.
-    translate([25,0,-0.1]){
-        cylinder(plate_thickness+1,d=3);
-        translate([-3.5,-3.5,plate_thickness/2+0.2])
-            cube([9,7,plate_thickness/2]);
+    for(i=[0:2]) {
+        rotate([0,0,i*90])
+            translate([25,0,-0.1]){
+                cylinder(plate_thickness+1,d=3);
+                translate([-3.5,-3.5,plate_thickness/2+0.2])
+                    cube([9,7,plate_thickness/2]);
+            }
     }
-        
-    translate([-25,0,-0.1]){
-        cylinder(plate_thickness+1,d=3);
-        translate([-5,-3.5,plate_thickness/2+0.2])
-            cube([9,7,plate_thickness/2]);
-    }
-        
-    translate([0,25,-0.1])
-        cylinder(plate_thickness+1,d=3);
 }
 

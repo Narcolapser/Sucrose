@@ -1,7 +1,7 @@
 // This file provides the baseplate of the candy dispenser. This holds the two circuit boards and screws into the bottom of the cuff.
 
 include <Node Plate.scad>
-
+$fn=256;
 // the base plate itself.
 module base_plate() {
     wall_thickness = 3;
@@ -33,3 +33,5 @@ module base_plate() {
         }
     }
 }
+
+base_plate();
