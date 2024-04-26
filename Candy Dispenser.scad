@@ -7,11 +7,12 @@ skittle_diameter = 13;
 cuff_height = 25;
 wall_thickness = 3;
 
-chassis_height = 50;
+chassis_height = 75;
 chassis_buffer = 2;
 chassis_base_radius = 50 + wall_thickness + chassis_buffer;
 chassis_opening_width = chassis_base_radius;
-chassis_opening_height = 20;
+chassis_opening_height = 25;
+chassis_lug_width = 10;
 
 
 $fn = 256;
@@ -24,23 +25,23 @@ echo("Rendering shield");
 module base() {
     difference() {
         // base
-        cylinder(h=50,chassis_base_radius,mason_jar_outer_diameter/2+wall_thickness);
+        cylinder(h=chassis_height,chassis_base_radius,mason_jar_outer_diameter/2+wall_thickness);
         
         // hollow center
         translate([0,0,-0.1])
-            cylinder(h=49-0.1,chassis_base_radius-wall_thickness-chassis_buffer,mason_jar_outer_diameter/2);
+            cylinder(h=chassis_height-0.1,chassis_base_radius-wall_thickness-chassis_buffer,mason_jar_outer_diameter/2);
         
         // top opening for the candy to fall
         difference() {
             // a cylinder to make the cut out
-            cylinder(h=51,r=mason_jar_outer_diameter/2);
+            cylinder(h=chassis_height+1,r=mason_jar_outer_diameter/2);
             // and then a cube to flatten said cylinder
-            translate([-mason_jar_outer_diameter,-mason_jar_outer_diameter/2,0])
-                cube(mason_jar_outer_diameter);
+            translate([0-chassis_height+chassis_lug_width/2,-chassis_height/2,0])
+                cube(chassis_height);
         }
         
         // and a hole for the motor
-        cylinder(h=51,d=15);
+        cylinder(h=chassis_height+1,d=15);
         
         // cutouts for cables and candies
         translate([-chassis_base_radius,-chassis_opening_width/2,-0.1])
@@ -77,5 +78,5 @@ module cuff() {
 
     
 base();
-translate([0,0,chassis_height])
-    cuff();
+//translate([0,0,chassis_height])
+//    cuff();
