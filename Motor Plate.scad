@@ -4,12 +4,12 @@ plate_thickness = 10;
 plate_diameter = 60;
 
 motor_height = 19.5;
-motor_diameter = 28.5;
+motor_diameter = 29.5;
 motor_bump_diameter = 9.2;
 motor_bump_height = 1.5;
 center_to_center_offset = 7.75;
-ear_width = 7.03;
-ear_length = 36.67;
+ear_width = 7.25;
+ear_length = 35;
 
 $fn = 256;
 
@@ -33,7 +33,7 @@ module stepper() {
     }
     
     //the wiring connection
-    cable_bump_width = 15;
+    cable_bump_width = 18;
     translate([-cable_bump_width/2,-20,0]) {
         cube([cable_bump_width,cable_bump_width,motor_height]);
     }

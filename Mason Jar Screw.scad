@@ -32,6 +32,6 @@ module screw_attachment(cuff_height, wall_thickness) {
 }
 
 // inputs
-screw_attachment(16,1);
+// screw_attachment(16,1);
 //cuff_height = 16;
 //wall_thickness = 1;
