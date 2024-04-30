@@ -1,8 +1,5 @@
 // This file represents the plate that holds the stepper motor that drives the singulator. The motor screws in from the top but the plate screws in from the bottom to the cuff. 
 
-plate_thickness = 10;
-plate_diameter = 60;
-
 motor_height = 19.5;
 motor_diameter = 29.5;
 motor_bump_diameter = 9.2;
@@ -39,25 +36,40 @@ module stepper() {
     }
 }
 
-difference() {
-    // The plate itself
-    cylinder(h=plate_thickness, d=plate_diameter);
+module simple_motor_plate(plate_thickness, plate_diameter) {
+    rotate([0,0,-90]){
+        difference() {
+            // The plate itself
+            cylinder(h=plate_thickness, d=plate_diameter);
 
 
-    // The cut out for the stepper motor
-    translate([0,-center_to_center_offset,plate_thickness-motor_height+0.1]) {
-        stepper();
-    }
-    
-    // The screw holes for mounting and the knotches for them.
-    // Rework this. Instead of making each one, make it in a for loop and rotate them around.
-    for(i=[0:2]) {
-        rotate([0,0,i*90])
-            translate([25,0,-0.1]){
-                cylinder(plate_thickness+1,d=3);
-                translate([-3.5,-3.5,plate_thickness/2+0.2])
-                    cube([9,7,plate_thickness/2]);
+            // The cut out for the stepper motor
+            translate([0,-center_to_center_offset,plate_thickness-motor_height+0.1]) {
+                stepper();
             }
+            
+            // The screw holes for mounting and the knotches for them.
+            notch_depth = 7;
+            notch_length = 8;
+            for(i=[0:2]) {
+                rotate([0,0,i*90])
+                    translate([plate_diameter/2-notch_length/2,0,-0.1]){
+                        cylinder(plate_thickness+1,d=3);
+                        translate([-notch_depth/2,-notch_depth/2,plate_thickness/2+0.2])
+                            cube([notch_length,notch_depth,plate_thickness/2]);
+                    }
+            }
+        }
     }
 }
 
+module motor_plate(plate_thickness, plate_diameter, cutoff) {
+    difference() {
+        simple_motor_plate(plate_thickness, plate_diameter);
+        translate([plate_diameter/2-cutoff,-plate_diameter/2,-0.1]) {
+            cube(plate_diameter);
+        }
+    }
+}
+
+//motor_plate(10,80,20);
