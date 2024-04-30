@@ -18,7 +18,7 @@ chassis_lug_width = 10;
 chassis_bottom_inner_radius = chassis_base_radius-wall_thickness-chassis_buffer;
 
 
-$fn = 256;
+$fn = 32;
 
 //singulator(mason_jar_outer_diameter,skittle_diameter);
 echo("Rendering shield");
@@ -54,9 +54,9 @@ module base() {
     }
 }
 
-module screw_lug(height,length){
+module screw_lug(height,length,spread){
     notch_depth = 5;
-    translate([mason_jar_outer_diameter/2-length/2,0,-0.1]){
+    translate([spread,0,-0.1]){
         difference() {
             translate([-notch_depth/2,-notch_depth/2,0.1])
                 cube([length,notch_depth,height]);
@@ -64,16 +64,24 @@ module screw_lug(height,length){
         }
     }
 }
-
+plate_radius = chassis_base_radius - wall_thickness - chassis_buffer-2; 
 module base_with_lugs() {
     base();
     lug_height = 7.5;
-    // The screw holes for mounting and the knotches for them.
+    // motor plate lugs
     translate([0,0,chassis_height-7.5]){
         for(i=[0:1]) {
             rotate([0,0,i*180+90]) {
-                screw_lug(lug_height,10);
+                screw_lug(lug_height,10,mason_jar_outer_diameter/2-length/2);
             }        
+        }
+    }
+    
+    translate([0,0,8]) {
+        for(i=[0:3]) {
+            rotate([0,0,i*90+45]) {
+                screw_lug(10,10,plate_radius-5);
+            }
         }
     }
 }
@@ -115,12 +123,11 @@ difference() {
             motor_plate(plate_thickness, mason_jar_outer_diameter-2,mason_jar_outer_diameter/2-shield_offset);
         }
  
-        plate_radius = chassis_base_radius - wall_thickness - chassis_buffer-2; 
+        
         translate([0,0,5])
             base_plate(plate_radius,wall_thickness);
-        
     }
-    translate([-chassis_height,-chassis_height,7]){
+    translate([-chassis_height,-chassis_height,20]){
         cube(chassis_height*2);
     }
 }
