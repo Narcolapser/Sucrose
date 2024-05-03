@@ -3,6 +3,7 @@ include <Singulator Shield.scad>
 include <Mason Jar Screw.scad>
 include <Base Plate.scad>
 include <Motor Plate.scad>
+include <Chute.scad>
 
 mason_jar_outer_diameter = 71;
 skittle_diameter = 13;
@@ -127,7 +128,9 @@ difference() {
         translate([0,0,5])
             base_plate(plate_radius,wall_thickness);
     }
-    translate([-chassis_height,-chassis_height,20]){
+    translate([-chassis_height,-chassis_height,80]){
         cube(chassis_height*2);
     }
 }
+translate([47,0,30])
+    chute(17,20,chassis_height-20,13);
