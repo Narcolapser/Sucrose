@@ -25,19 +25,30 @@ module chute(inner_radius,outer_radius,chute_height,slant) {
         cut_pipe(chute_height,outer_radius,inner_radius,cutoff);
 
     // Elbow
-    translate([-1.8,0,0]) {
-        difference(){
-            sphere(r=outer_radius);
-            translate([-outer_radius,-outer_radius,0])
-                cube(outer_radius*2);
-            sphere(r=inner_radius);
-            translate([0,-outer_radius,-outer_radius])
-                cube(outer_radius*2);
-        }
+//    translate([-1.8,0,0]) {
+//        difference(){
+//            sphere(r=outer_radius);
+//            translate([-outer_radius,-outer_radius,0])
+//                cube(outer_radius*2);
+//            sphere(r=inner_radius);
+//            translate([0,-outer_radius,-outer_radius])
+//                cube(outer_radius*2);
+//        }
+//    }
+
+    // Nicer elbow
+    degrees = 90-slant;
+    steps = 16;
+    degrees_per_step = degrees/steps;
+    for(i = [0:steps]) {
+        rotate([0,-i*degrees_per_step-slant,0])
+            translate([0,0,0])
+                cut_pipe(20/steps,outer_radius,inner_radius,cutoff);
     }
+
     
     // Extension
-    translate([extension_length-1.8,0,inner_radius-outer_radius-0.8])
+    translate([extension_length-1.8,0,inner_radius-outer_radius])
         rotate([0,-90+extension_slant,0])
             cut_pipe(extension_length,outer_radius,inner_radius,cutoff);
     
@@ -55,4 +66,4 @@ module chute(inner_radius,outer_radius,chute_height,slant) {
     }
 }
 
-//chute(17,20,100,25);
+chute(17,20,100,25);
