@@ -23,6 +23,9 @@ module base_plate(plate_radius, wall_thickness) {
                 }
             }
         }
+        translate([plate_radius-12,-plate_radius,-0.1]) {
+            cube(plate_radius*2);
+        }
     }
 }
 

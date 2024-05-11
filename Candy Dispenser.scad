@@ -14,7 +14,7 @@ chassis_height = 75;
 chassis_buffer = 2;
 chassis_base_radius = 50 + wall_thickness + chassis_buffer;
 chassis_opening_width = chassis_base_radius;
-chassis_opening_height = 25;
+chassis_opening_height = 21;
 chassis_lug_width = 10;
 chassis_bottom_inner_radius = chassis_base_radius-wall_thickness-chassis_buffer;
 
@@ -42,7 +42,7 @@ module base() {
             // a cylinder to make the cut out
             cylinder(h=chassis_height+1,r=mason_jar_outer_diameter/2);
             // and then a cube to flatten said cylinder
-            translate([0-chassis_height+shield_offset,-chassis_height/2,0])
+            translate([0-chassis_height+shield_offset+6,-chassis_height/2,0])
                 cube(chassis_height);
         }
         
@@ -73,7 +73,7 @@ module base_with_lugs() {
     translate([0,0,chassis_height-7.5]){
         for(i=[0:1]) {
             rotate([0,0,i*180+90]) {
-                screw_lug(lug_height,10,mason_jar_outer_diameter/2-length/2);
+                screw_lug(lug_height,10,mason_jar_outer_diameter/2-10/2);
             }        
         }
     }
@@ -127,10 +127,11 @@ difference() {
         
         translate([0,0,5])
             base_plate(plate_radius,wall_thickness);
+        
+        translate([47,0,0])
+            chute(17,20,chassis_height-26.01,13,chassis_base_radius,21);
     }
-    translate([-chassis_height,-chassis_height,80]){
-        cube(chassis_height*2);
-    }
+//    translate([-chassis_height,-chassis_height,chassis_height-5]){
+//        cube(chassis_height*2);
+//    }
 }
-translate([47,0,30])
-    chute(17,20,chassis_height-20,13);
