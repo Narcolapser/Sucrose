@@ -21,7 +21,7 @@ chassis_bottom_inner_radius = chassis_base_radius-wall_thickness-chassis_buffer;
 chute_inner_radius = 17;
 
 
-$fn = 32;
+$fn = 256;
 
 //singulator(mason_jar_outer_diameter,skittle_diameter);
 echo("Rendering shield");
@@ -119,23 +119,23 @@ module cuff() {
 
 difference() {    
     union() {
-        base_with_lugs();
-        //translate([0,0,chassis_height]){
-            //cuff()};
+//        base_with_lugs();
+//        translate([0,0,chassis_height]){
+//            cuff();
+//        }
 
         plate_thickness = 10;
         translate([0,0,chassis_height-plate_thickness-wall_thickness]){
             motor_plate(plate_thickness, mason_jar_outer_diameter-2,mason_jar_outer_diameter/2-shield_offset);
         }
- 
+
+//        translate([0,0,5])
+//            base_plate(plate_radius,wall_thickness);
         
-        translate([0,0,5])
-            base_plate(plate_radius,wall_thickness);
-        
-        translate([47,0,0])
-            chute(chute_inner_radius,20,chassis_height-26.01,13,chassis_base_radius,21);
+//        translate([47,0,0])
+//            chute(chute_inner_radius,20,chassis_height-26.01,13,chassis_base_radius,21);
     }
-//    translate([-chassis_height,-chassis_height,chassis_height-5]){
+//    translate([-chassis_height,-chassis_height,chassis_height-65]){
 //        cube(chassis_height*2);
 //    }
 }
