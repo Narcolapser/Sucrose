@@ -18,6 +18,8 @@ chassis_opening_height = 21;
 chassis_lug_width = 10;
 chassis_bottom_inner_radius = chassis_base_radius-wall_thickness-chassis_buffer;
 
+chute_inner_radius = 17;
+
 
 $fn = 32;
 
@@ -38,12 +40,13 @@ module base() {
             cylinder(h=chassis_height-wall_thickness,chassis_bottom_inner_radius,mason_jar_outer_diameter/2);
         
         // top opening for the candy to fall
-        difference() {
+        intersection() {
             // a cylinder to make the cut out
             cylinder(h=chassis_height+1,r=mason_jar_outer_diameter/2);
             // and then a cube to flatten said cylinder
-            translate([0-chassis_height+shield_offset+6,-chassis_height/2,0])
-                cube(chassis_height);
+                    translate([35,0,chassis_height-wall_thickness*2+0.1]){
+            cylinder(h=wall_thickness*2,r=chute_inner_radius);
+        }
         }
         
         // and a hole for the motor
@@ -53,6 +56,7 @@ module base() {
         translate([-chassis_base_radius,-chassis_opening_width/2,-0.1])
             cube([chassis_base_radius*2,chassis_opening_width,chassis_opening_height]);    
     }
+
 }
 
 module screw_lug(height,length,spread){
@@ -129,7 +133,7 @@ difference() {
             base_plate(plate_radius,wall_thickness);
         
         translate([47,0,0])
-            chute(17,20,chassis_height-26.01,13,chassis_base_radius,21);
+            chute(chute_inner_radius,20,chassis_height-26.01,13,chassis_base_radius,21);
     }
 //    translate([-chassis_height,-chassis_height,chassis_height-5]){
 //        cube(chassis_height*2);
