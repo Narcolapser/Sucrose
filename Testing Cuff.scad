@@ -1,6 +1,4 @@
-// This project is to create a candy despenser, specifically skittles, that connects to home assistant.
-
-include <threads.scad>
+// Proof of concept spinning a cube for a screw.
 
 mason_jar_inner_diameter = 60;
 mason_jar_outer_diameter = 71;
