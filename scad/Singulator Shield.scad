@@ -30,4 +30,4 @@ skittle_height = 9;
 cuff_height = 14;
 wall_thickness = 3;
 
-singulator_shield(mason_jar_outer_diameter,cuff_height,skittle_height,wall_thickness);
+// singulator_shield(mason_jar_outer_diameter,cuff_height,skittle_height,wall_thickness);

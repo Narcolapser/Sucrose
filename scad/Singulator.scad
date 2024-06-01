@@ -37,4 +37,4 @@ skittle_height = 9;
 cuff_height = 25;
 wall_thickness = 3;
 
-singulator(mason_jar_outer_diameter,skittle_diameter,skittle_height);
+//singulator(mason_jar_outer_diameter,skittle_diameter,skittle_height);

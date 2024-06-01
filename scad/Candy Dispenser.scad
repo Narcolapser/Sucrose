@@ -7,6 +7,7 @@ include <Chute.scad>
 
 mason_jar_outer_diameter = 71;
 skittle_diameter = 13;
+skittle_height = 9;
 cuff_height = 25;
 wall_thickness = 3;
 
@@ -23,7 +24,6 @@ chute_inner_radius = 17;
 
 $fn = 31;
 
-//singulator(mason_jar_outer_diameter,skittle_diameter);
 echo("Rendering shield");
 //singulator_shield(mason_jar_outer_diameter,cuff_height,skittle_diameter,wall_thickness);
 
@@ -119,21 +119,29 @@ module cuff() {
 
 difference() {    
     union() {
-        //base_with_lugs();
-//        translate([0,0,chassis_height]){
-//            cuff();
-//        }
+        base_with_lugs();
+        translate([0,0,chassis_height]){
+            cuff();
+        }
 
-//        plate_thickness = 10;
-//        translate([0,0,chassis_height-plate_thickness-wall_thickness]){
-//            motor_plate(plate_thickness, mason_jar_outer_diameter-2,mason_jar_outer_diameter/2-shield_offset);
-//        }
+        plate_thickness = 10;
+        //translate([0,0,chassis_height-plate_thickness-wall_thickness]){
+        translate([100,120,0]) {
+            motor_plate(plate_thickness, mason_jar_outer_diameter-2,mason_jar_outer_diameter/2-shield_offset);
+        }
 
-//        translate([0,0,5])
-//            base_plate(plate_radius,wall_thickness);
+        translate([0,120,0])
+            base_plate(plate_radius,wall_thickness);
         
-//        translate([47,0,0])
-//            chute(chute_inner_radius,20,chassis_height-26.01,13,chassis_base_radius,21);
+        translate([160,0,0]) {
+            singulator(mason_jar_outer_diameter,skittle_diameter,skittle_height);
+        }
+        translate([160,120,0]) {
+            singulator_shield(mason_jar_outer_diameter,cuff_height,skittle_height,wall_thickness);
+        }
+        
+        translate([47,0,0])
+            chute(chute_inner_radius,20,chassis_height-26.01,13,chassis_base_radius,21);
     }
 //    translate([-chassis_height,-chassis_height,chassis_height-65]){
 //        cube(chassis_height*2);
